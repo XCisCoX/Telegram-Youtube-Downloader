@@ -22,8 +22,10 @@ def YouTube_Audio_Downloader(save_path: str, download_link: str) -> str:
 		
 		if os.path.exists(save_path):	
 			try:
-				URL = YouTube(download_link)
-				URL.bypass_age_gate()
+                            #in case you want to bypass age gate you need to login
+				URL = YouTube(download_link##, use_oauth=True, allow_oauth_cache= True)
+				)
+                
 				URL.streams.filter(only_audio = True).order_by('abr').desc().first().download(save_path, filename = URL.title + ".mp3")           
 				download_image(URL.thumbnail_url, save_path + "/" + URL.title + ".jpg")
 				return URL.title

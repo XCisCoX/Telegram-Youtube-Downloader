@@ -74,9 +74,10 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     some_url = {}
     if(check_youtube_link_validity(update.message.text)):
         await update.message.reply_text("Downloading Audio...")
+        # TODO: some times for windows you should link \\ but in linux you need to do / so i should check it
+        
         create_directory_if_not_exists(current_directory + "/musics")
-        video_name =  YouTube_Audio_Downloader(current_directory + "/musics", update.message.text)       
-         
+        video_name =  YouTube_Audio_Downloader(current_directory + "/musics", update.message.text)             
         await update.message.reply_audio(title=video_name,
                                          thumbnail=open(current_directory + f"/musics/{video_name}.jpg", 'rb'),
                                           audio=open(current_directory + f"/musics/{video_name}.mp3", 'rb'))

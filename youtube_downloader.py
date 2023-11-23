@@ -16,21 +16,19 @@ def download_image(url, file_name):
     except requests.RequestException as e:
         print(f"Error downloading the image: {e}")
         
-def YouTube_Audio_Downloader(save_path: str, download_link: str, someURL: dict,
-		progress_callback: Optional[Callable[[Any, bytes, int], None]] = None,
-        complete_callback: Optional[Callable[[Any, Optional[str]], None]] = None) -> str:
+
+def YouTube_Audio_Downloader(save_path: str, download_link: str) -> str:
 		URL = None
 		
 		if os.path.exists(save_path):	
 			try:
-				URL = YouTube(download_link, on_complete_callback = complete_callback, on_progress_callback = progress_callback)
+				URL = YouTube(download_link)
 				URL.bypass_age_gate()
-				URL.streams.filter(only_audio=True).order_by('abr').desc().first().download(save_path,filename=URL.title+".mp3")
-				download_image(URL.thumbnail_url,save_path+"\\"+URL.title+".jpg")
-
+				URL.streams.filter(only_audio = True).order_by('abr').desc().first().download(save_path, filename = URL.title + ".mp3")           
+				download_image(URL.thumbnail_url, save_path + "/" + URL.title + ".jpg")
 				return URL.title
 			except Exception as ex:
-				print("Got Error:" + ex)
+				print("Got Error:" + ex.args)
 				return None						
 		else:
 			print("Saving Path Not Exist")

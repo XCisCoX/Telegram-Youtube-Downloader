@@ -21,6 +21,7 @@ from telegram import __version__ as TG_VER
 
 
 current_directory = os.getcwd()
+print(current_directory)
 # get iran timezone
 country_time_zone = pytz.timezone('Asia/Tehran')
 
@@ -66,20 +67,19 @@ def create_directory_if_not_exists(directory):
         os.makedirs(directory)
         print(f"Directory '{directory}' created successfully.")
     else:
-        print(f"Directory '{directory}' already exists.")
+       return
 
 
-    
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:    
     some_url = {}
     if(check_youtube_link_validity(update.message.text)):
         await update.message.reply_text("Downloading Audio...")
-        create_directory_if_not_exists(current_directory + "\\musics")
-        video_name =  YouTube_Audio_Downloader(current_directory + "\\musics", update.message.text, someURL= some_url)       
+        create_directory_if_not_exists(current_directory + "/musics")
+        video_name =  YouTube_Audio_Downloader(current_directory + "/musics", update.message.text)       
          
         await update.message.reply_audio(title=video_name,
-                                         thumbnail=open(current_directory + f"\\musics\\{video_name}.jpg", 'rb'),
-                                          audio=open(current_directory + f"\\musics\\{video_name}.mp3", 'rb'))
+                                         thumbnail=open(current_directory + f"/musics/{video_name}.jpg", 'rb'),
+                                          audio=open(current_directory + f"/musics/{video_name}.mp3", 'rb'))
     else:
         await update.message.reply_text("Invalid Link ...")
 
